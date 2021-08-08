@@ -1,8 +1,8 @@
 {
-  "name": "Start on Heroku: Node.js",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
-  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/main/public/node.svg",
+  "name": "Nextix",
+  "description": "Starter Chat",
+  "repository": "https://github.com/nbrthx/nextix",
+  "logo": "https://niberthix.eu.org/assets/favicon/apple-icon-180x180.png",
   "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs"
 }
