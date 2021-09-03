@@ -1,8 +1,7 @@
 {
   "name": "Nextix",
-  "description": "Starter Chat",
+  "description": "First Project",
   "repository": "https://github.com/nbrthx/nextix",
   "logo": "https://niberthix.eu.org/assets/favicon/apple-icon-180x180.png",
-  "keywords": ["node", "express", "heroku"],
   "image": "heroku/nodejs"
 }
