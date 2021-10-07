@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alqapp</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <% if(data != null){ %>
+      <div id="info">
+        <h1 align="center">
+          Soal <%= data %>
+        </h1>
+      </div><br>
+      <div id="tugas">
+        <form method=post action='/dosoal?id=<%= data %>'>
+          <div id="pg">
+
+          </div>
+          <div id="es">
+
+          </div>
+          <input type=submit value=Done>
+      </div><br>
+      <script>
+        var tugas;
+        var key = "<%= data %>";
+        $.getJSON( "data.json", function( dataa ) {
+          
+        });
+        $.getJSON( "tugas.json", function( dataa ) {
+          for(let x in dataa[key].es){
+            $("#es").append("<div>"+x+". "+dataa[key].es[x][0]+":<br><input name=es"+x+" type=text></div>")
+          }
+        })
+      </script>
+      <% }else{ %>
+      Not Logged in, login in <a href="login">Here</a>
+      <% } %>
+    </div>
+  </body>
+</html>
