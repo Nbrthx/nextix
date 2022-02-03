@@ -24,14 +24,10 @@ express()
   })
   .get("/soal", (req, res) => {
     if(req.url.includes("?")){
-      var preid = (req.url).split("?")[1].split("=")[0];
-      var id;
-      if(preid == "id"){
-        id = (req.url).split("?")[1].split("=")[1];
-      }else{
-        res.redirect("/")
+      var id = req.query.id;
+      if(id){ 
+        res.render("soal", { data: id });
       }
-      res.render("soal", { data: id });
     }else{
       res.redirect("/")
     }
@@ -44,11 +40,8 @@ express()
     var data2 = JSON.parse(
       fs.readFileSync("public/data.json", "utf8")
     );
-    var preid = (req.url).split("?")[1].split("=")[0];
-    var id;
-    if(preid == "id"){
-      id = (req.url).split("?")[1].split("=")[1];
-    }else{
+    var id = req.query.id;
+    if(id == null){
       res.redirect("/soal")
       return;
     }
@@ -81,7 +74,7 @@ express()
       fs.readFileSync("public/data.json", "utf8")
     );
 
-    var encrypted = CryptoJS.AES.encrypt("Message", "Secret Passphrase");
+    var encrypted = CryptoJS.AES.encrypt(password, "Secret Passphrase");
     var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase");
     if (username && password) {
       if (data[username] != null && data[username][0] == password) {
