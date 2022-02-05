@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cjs = require("crypto-js");
-const fs = require("fs");
+const pg = require("pg");
 const bodyp = require("body-parser");
 const cookiep = require("cookie-parser");
 
@@ -25,9 +25,9 @@ app.get("/", (req, res) => {
   })
   .get("/soal", (req, res) => {
     var id = req.query.id;
-    if(id){ 
+    if(id){
       res.render("soal", { data: id });
-    }
+   }
   })
   .post("/dosoal", function(req, res) {
     var name = req.signedCookies.user
@@ -71,8 +71,8 @@ app.get("/", (req, res) => {
       fs.readFileSync("public/data.json", "utf8")
     );
 
-    var encrypted = CryptoJS.AES.encrypt(password, "Secret Passphrase");
-    var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase");
+    var encrypted = cjs.AES.encrypt(password, "Secret Passphrase");
+    var decrypted = cjs.AES.decrypt(encrypted, "Secret Passphrase");
     if (username && password) {
       if (data[username] != null && data[username][0] == password) {
         res.cookie("user", username, { signed: true });
