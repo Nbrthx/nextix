@@ -4,32 +4,29 @@ const cjs = require("crypto-js");
 const fs = require("fs");
 const bodyp = require("body-parser");
 const cookiep = require("cookie-parser");
-const PORT = process.env.PORT || 5000;
 
-require("dotenv").config();
+const port = process.env.PORT || 5000;
+const psph = process.env.PASSPHARSE;
+const dburl = process.env.DATABASE_URL
 
-var psph = process.env.PASSPHARSE;
-
-express()
-  .use(express.static(path.join(__dirname, 'public')))
+var app = express();
+ 
+app.use(express.static(path.join(__dirname, 'public')))
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
   .use(cookiep("secret"))
   .use(bodyp.urlencoded({ extended: true }))
   .use(bodyp.json())
-  .get("/", (req, res) => {
+
+app.get("/", (req, res) => {
     var name = req.signedCookies.user
     var tugas = req.signedCookies.tugas || []
     res.render("index", { data: name, tugas: tugas });
   })
   .get("/soal", (req, res) => {
-    if(req.url.includes("?")){
-      var id = req.query.id;
-      if(id){ 
-        res.render("soal", { data: id });
-      }
-    }else{
-      res.redirect("/")
+    var id = req.query.id;
+    if(id){ 
+      res.render("soal", { data: id });
     }
   })
   .post("/dosoal", function(req, res) {
@@ -121,4 +118,7 @@ express()
   })
   .get("/login", (req, res) => res.render("login"))
   .get("/register", (req, res) => res.render("register"))
-  .listen(PORT, () => console.log("Listening on "+PORT), express().settings.env);
+
+app.listen(PORT, () => {
+  console.log("Listening on "+PORT)
+}, app.settings.env);
