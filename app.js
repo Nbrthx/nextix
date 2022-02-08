@@ -10,6 +10,11 @@ const psph = process.env.PASSPHARSE;
 const dburl = process.env.DATABASE_URL
 
 var app = express();
+
+const dbp = new pg.Pool({
+  connectionString: dburl,
+  ssl: { rejectUnauthorized: false }
+})
  
 app.use(express.static(path.join(__dirname, 'public')))
   .set("views", path.join(__dirname, "views"))
