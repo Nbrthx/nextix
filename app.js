@@ -11,7 +11,7 @@ const dburl = process.env.DATABASE_URL
 
 var app = express();
 
-const dbp = new pg.Pool({
+const dbc = new pg.Client({
   connectionString: dburl,
   ssl: { rejectUnauthorized: false }
 })
@@ -95,20 +95,19 @@ app.get("/", (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var repassword = req.body.repassword;
-    var data = JSON.parse(
-      fs.readFileSync("public/data.json", "utf8")
-    );
+    var datas = dbc.query("select * from users")
     if (username && password && repassword) {
-      if (data[username] != null) {
-        res.send("Username has already");
-      } else {
-        if(password == repassword){
-          data[username] = [password, 0, 0]
-          fs.writeFileSync("public/data.json", JSON.stringify(data), "utf8")
-          res.cookie("user", username, { signed: true });
-          res.redirect("/");
-        }else{
-          res.send("Password & Re-Password are not the same");
+      for(let data on datas){
+        if (data[username] != null) {
+          res.send("Username has already");
+        } else {
+          if(password == repassword){
+            data[username] = [password, 0, 0]
+            res.cookie("user", username, { signed: true });
+            res.redirect("/");
+          }else{
+            res.send("Password & Re-Password are not the same");
+          }
         }
       }
       res.end();
