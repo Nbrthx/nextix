@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cjs = require("crypto-js");
-const pg = require("pg-sync");
+const pg = require("pg");
 const bodyp = require("body-parser");
 const cookiep = require("cookie-parser");
 
