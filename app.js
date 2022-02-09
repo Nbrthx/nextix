@@ -97,7 +97,7 @@ app.get("/", (req, res) => {
     var repassword = req.body.repassword;
     var datas = dbc.query("select * from users")
     if (username && password && repassword) {
-      for(let data on datas){
+      for(let data of datas){
         if (data[username] != null) {
           res.send("Username has already");
         } else {
