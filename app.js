@@ -11,7 +11,7 @@ const dburl = process.env.DATABASE_URL
 
 var app = express();
 
-const dbc = new pg.Client({
+const pool = new pg.Pool({
   connectionString: dburl,
   ssl: { rejectUnauthorized: false }
 })
@@ -95,7 +95,7 @@ app.get("/", (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var repassword = req.body.repassword;
-    var datas = dbc.query("select * from users", (err, datas) => {
+    pool.query("select * from users", (err, datas) => {
     if (username && password && repassword) {
       for(let data of datas.rows){
         if (data[username] != null) {
