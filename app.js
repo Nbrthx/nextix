@@ -123,6 +123,6 @@ app.get("/", (req, res) => {
   .get("/login", (req, res) => res.render("login"))
   .get("/register", (req, res) => res.render("register"))
 
-app.listen(PORT, () => {
-  console.log("Listening on "+PORT)
+app.listen(port, () => {
+  console.log("Listening on "+port)
 }, app.settings.env);
