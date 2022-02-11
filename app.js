@@ -95,7 +95,7 @@ app.get("/", (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var repassword = req.body.repassword;
-    var datas = dbc.query("select * from users")
+    var datas = dbc.query("select * from users", (err, row) => {
     if (username && password && repassword) {
       for(let data of datas.rows){
         if (data[username] != null) {
@@ -110,6 +110,7 @@ app.get("/", (req, res) => {
           }
         }
       }
+      })
       res.end();
     } else {
       res.send("Please enter Username and Password and Re-Password!");
