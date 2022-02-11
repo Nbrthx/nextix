@@ -95,8 +95,8 @@ app.get("/", (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     var repassword = req.body.repassword;
-    pool.query("select * from users", (err, datas) => {
     if (username && password && repassword) {
+      pool.query("select * from users", (err, datas) => {
       for(let data of datas.rows){
         if (data[username] != null) {
           res.send("Username has already");
