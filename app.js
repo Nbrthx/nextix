@@ -102,7 +102,7 @@ app.get("/", (req, res) => {
           res.send("Username has already");
         } else {
           if(password == repassword){
-            pool.query("insert into users values (default,'"+username+"','"+password+'
+            pool.query("insert into users values (default,'"+username+"','"+password+"')")
             res.cookie("user", username, { signed: true });
             res.redirect("/");
           }else{
