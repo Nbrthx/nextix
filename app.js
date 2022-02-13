@@ -97,20 +97,20 @@ app.get("/", (req, res) => {
     var password = req.body.password;
     var repassword = req.body.repassword;
     if (username && password && repassword) {
-      pool.query("select * from users", (err, datas) => {
-      for(let data of datas.rows){
-        if (data[username] != null) {
-          res.send("Username has already");
-        } else {
-          if(password == repassword){
-            pool.query("insert into users values ('"+username+"','"+name+"','"+password+"')")
-            res.cookie("user", username, { signed: true });
-            res.redirect("/");
-          }else{
-            res.send("Password & Re-Password are not the same");
+      pool.query("select * from users", (err, data) => {
+        for(let dt of data.rows){
+          if (dt[username] != null) {
+            res.send("Username has already");
+            return;
           }
         }
-      }
+        if(password == repassword){
+          pool.query("insert into users values ('"+username+"','"+name+"','"+password+"')")
+          res.cookie("user", username, { signed: true });
+          res.redirect("/");
+        }else{
+          res.send("Password & Re-Password are not the same");
+        }
       })
       res.end();
     } else {
