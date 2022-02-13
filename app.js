@@ -19,7 +19,7 @@ const pool = new pg.Pool({
 app.use(express.static(path.join(__dirname, 'public')))
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
-  .use(cookieParser(psph))
+  .use(express.cookieParser(psph))
   .use(bodyp.urlencoded({ extended: true }))
   .use(bodyp.json())
   .get("/", (req, res) => {
