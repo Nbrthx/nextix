@@ -3,7 +3,7 @@ const path = require("path");
 const cjs = require("crypto-js");
 const pg = require("pg");
 const bodyp = require("body-parser");
-const cookiep = require("cookie-parser");
+const cookieParser = require("cookie-parser");
 
 const port = process.env.PORT || 5000;
 const psph = process.env.PASSPHARSE;
@@ -19,7 +19,7 @@ const pool = new pg.Pool({
 app.use(express.static(path.join(__dirname, 'public')))
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
-  .use(cookiep("secret"))
+  .use(cookieParser(psph))
   .use(bodyp.urlencoded({ extended: true }))
   .use(bodyp.json())
   .get("/", (req, res) => {
