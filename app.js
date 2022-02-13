@@ -22,8 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')))
   .use(cookiep("secret"))
   .use(bodyp.urlencoded({ extended: true }))
   .use(bodyp.json())
-
-app.get("/", (req, res) => {
+  .get("/", (req, res) => {
     var name = req.signedCookies.user
     var tugas = req.signedCookies.tugas || []
     res.render("index", { data: name, tugas: tugas });
