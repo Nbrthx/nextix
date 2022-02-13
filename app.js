@@ -98,13 +98,14 @@ app.get("/", (req, res) => {
     var repassword = req.body.repassword;
     if (username && password && repassword) {
       pool.query("select * from users", (err, data) => {
+        var exist = false
         for(let dt of data.rows){
           if (dt["uname"] == username) {
-            res.send("Username has already");
-            return;
+            exist = true;
           }
         }
-        if(password == repassword){
+        if(exist == true) res.send("Username has already");
+        else if(password == repassword){
           pool.query("insert into users values ('"+username+"','"+name+"','"+password+"')")
           res.cookie("user", username, { signed: true });
           res.redirect("/");
