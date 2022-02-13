@@ -93,6 +93,7 @@ app.get("/", (req, res) => {
   })
   .post("/doregister", function(req, res) {
     var username = req.body.username;
+    var name = req.body.name;
     var password = req.body.password;
     var repassword = req.body.repassword;
     if (username && password && repassword) {
@@ -102,7 +103,7 @@ app.get("/", (req, res) => {
           res.send("Username has already");
         } else {
           if(password == repassword){
-            pool.query("insert into users values (default,'"+username+"','"+password+"')")
+            pool.query("insert into users values ('"+username+"','"+name+"','"+password+"')")
             res.cookie("user", username, { signed: true });
             res.redirect("/");
           }else{
