@@ -16,10 +16,11 @@ const pool = new pg.Pool({
   ssl: { rejectUnauthorized: false }
 })
  
-app.use(express.static(path.join(__dirname, 'public')))
+app
+  .use(express.static(path.join(__dirname, 'public')))
   .set("views", path.join(__dirname, "views"))
   .set("view engine", "ejs")
-  .use(express.cookieParser(psph))
+  .use(cookieParser(psph))
   .use(bodyp.urlencoded({ extended: true }))
   .use(bodyp.json())
   .get("/", (req, res) => {
