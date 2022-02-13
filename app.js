@@ -99,7 +99,7 @@ app.get("/", (req, res) => {
     if (username && password && repassword) {
       pool.query("select * from users", (err, data) => {
         for(let dt of data.rows){
-          if (dt[username] != null) {
+          if (dt["uname"] == username) {
             res.send("Username has already");
             return;
           }
