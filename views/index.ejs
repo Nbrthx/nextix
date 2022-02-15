@@ -20,18 +20,6 @@
       <div id="tugas"></div><br>
       <script>
         var tugas;
-        $.getJSON( "data.json", function( dataa ) {
-          $("#t-name").html("<%= data %>")
-          $("#t-skor").html(dataa["<%= data %>"][1])
-          $("#t-absen").html(dataa["<%= data %>"][2])
-        });
-        $.getJSON( "tugas.json", function( dataa ) {
-          var arr = <%= JSON.stringify(tugas) %>;
-          for(let x in dataa){
-            if(!arr.includes(x))
-            $("#tugas").append("<a href='/soal?id="+x+"'>"+dataa[x].name+"</a><br>")
-          }
-        })
       </script>
       <% }else{ %>
       Not Logged in, login in <a href="login">Here</a>
