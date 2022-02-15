@@ -70,7 +70,7 @@ app
     res.send(skor+"")
   })
   .post("/dologin", function(req, res) {
-    var username = req.body.username.toLowerCase;
+    var username = req.body.username.toLowerCase();
     var password = req.body.password;
 
     pool.query("select uname, pword from users where uname='"+username+"'", (err, data) => {
@@ -93,7 +93,7 @@ app
     })
   })
   .post("/doregister", function(req, res) {
-    var username = req.body.username.toLowerCase;
+    var username = req.body.username.toLowerCase();
     var name = req.body.name;
     var password = req.body.password
     var encrypt = cjs.AES.encrypt(password, psph);
