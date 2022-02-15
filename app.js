@@ -76,9 +76,9 @@ app
     pool.query("select uname, pword from users where uname='"+username+"'", (err, data) => {
     if(err) return err;
     else{
-      var decrypted = cjs.AES.decrypt(data.rows[0].pword, psph);
+      var decrypted = cjs.AES.decrypt(data.rows[0]["pword"], psph);
       if (username && password) {
-        if (data.rows[0].uname == username && decrypted == password) {
+        if (data.rows[0]["uname"] == username && decrypted == password) {
           res.cookie("user", username, { signed: true });
           res.redirect("/");
         } else {
