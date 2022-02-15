@@ -70,31 +70,33 @@ app
     res.send(skor+"")
   })
   .post("/dologin", function(req, res) {
-    var username = req.body.username;
+    var username = req.body.username.toLowerCase;
     var password = req.body.password;
-    var data = JSON.parse(
-      fs.readFileSync("public/data.json", "utf8")
-    );
 
-    var encrypted = cjs.AES.encrypt(password, "Secret Passphrase");
-    var decrypted = cjs.AES.decrypt(encrypted, "Secret Passphrase");
-    if (username && password) {
-      if (data[username] != null && data[username][0] == password) {
-        res.cookie("user", username, { signed: true });
-        res.redirect("/");
+    pool.query("select uname, pword from users where uname='"+username+"'", (err, data) => {
+    if(err) return err;
+    else{
+      var decrypted = cjs.AES.decrypt(data.rows[0].pword, psph);
+      if (username && password) {
+        if (data.rows[0].uname == username && decrypted == password) {
+          res.cookie("user", username, { signed: true });
+          res.redirect("/");
+        } else {
+          res.send("Incorrect Username and/or Password!");
+        }
+        res.end();
       } else {
-        res.send("Incorrect Username and/or Password!");
+        res.send("Please enter Username and Password!");
+        res.end();
       }
-      res.end();
-    } else {
-      res.send("Please enter Username and Password!");
-      res.end();
     }
+    })
   })
   .post("/doregister", function(req, res) {
-    var username = req.body.username;
+    var username = req.body.username.toLowerCase;
     var name = req.body.name;
-    var password = req.body.password;
+    var password = req.body.password
+    var encrypt = cjs.AES.encrypt(password, psph);
     var repassword = req.body.repassword;
     if (username && password && repassword) {
       var exist = false
@@ -107,7 +109,7 @@ app
       })
       if(exist == true) res.send("Username has already");
       else if(password == repassword){
-        pool.query("insert into users values ('"+username+"','"+name+"','"+password+"')")
+        pool.query("insert into users values ('"+username+"','"+name+"','"+encrypt+"')")
         res.cookie("user", username, { signed: true });
         res.redirect("/");
       }else{
