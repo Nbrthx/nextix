@@ -75,6 +75,8 @@ app
 
     pool.query("select uname, pword from users where uname='"+username+"'", (err, data) => {
     if(err) return err;
+    else if(data.rows[0] == null)
+      res.send("Incorrect Username and/or Password!");
     else{
       var decrypted = cjs.AES.decrypt(data.rows[0]["pword"], psph).toString(cjs.enc.Utf8);
       if (username && password) {
