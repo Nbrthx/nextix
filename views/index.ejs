@@ -19,10 +19,7 @@
       </div><br>
       <div id="tugas"></div><br>
       <script>
-        $(document).ready(function(){
-          var name = $("#t-name")
-          name.html(<%= data %>)
-        })
+        var name = $("#t-name").html(<%= String(data) %>)
       </script>
       <% }else{ %>
       Not Logged in, login in <a href="login">Here</a>
