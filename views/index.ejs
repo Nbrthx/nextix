@@ -19,8 +19,10 @@
       </div><br>
       <div id="tugas"></div><br>
       <script>
-        var name = $("#t-name")
-        name.html(<%= data %>)
+        $(document).ready(function(){
+          var name = $("#t-name")
+          name.html(<%= data %>)
+        })
       </script>
       <% }else{ %>
       Not Logged in, login in <a href="login">Here</a>
