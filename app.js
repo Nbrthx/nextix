@@ -28,47 +28,6 @@ app
     var tugas = req.signedCookies.tugas || []
     res.render("index", { data: name, tugas: tugas });
   })
-  .get("/soal", (req, res) => {
-    var id = req.query.id;
-    if(id){
-      res.render("soal", { data: id });
-   }
-  })
-  .post("/dosoal", function(req, res) {
-    var name = req.signedCookies.user
-    var data = JSON.parse(
-      fs.readFileSync("public/tugas.json", "utf8")
-    );
-    var data2 = JSON.parse(
-      fs.readFileSync("public/data.json", "utf8")
-    );
-    var id = req.query.id;
-    if(id == null){
-      res.redirect("/soal")
-      return;
-    }
-    var nilai = [];
-    var total = 0;
-    for(let x in data[id].es){
-      var es = req.body["es"+x]
-      if(es == data[id].es[x][1]){
-        nilai.push("y")
-      }else{
-        nilai.push("x")
-      }
-      total++;
-    }
-    var skor = nilai.filter(x => x == "y").length;
-    
-    data2[req.signedCookies.user][1] = skor/total*100;
-    fs.writeFileSync("public/data.json", JSON.stringify(data2), "utf8")
-    if(req.signedCookies.tugas){
-      res.cookie("tugas", req.signedCookies.tugas.push(id), { signed: true })
-    }else{
-      res.cookie("tugas", [id], { signed: true })
-    }
-    res.send(skor+"")
-  })
   .post("/dologin", function(req, res) {
     var username = req.body.username.toLowerCase();
     var password = req.body.password;
