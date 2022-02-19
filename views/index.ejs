@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Alqapp</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <h1>
@@ -19,7 +18,8 @@
       </div><br>
       <div id="tugas"></div><br>
       <script>
-        var name = $("#t-name").html(<%= String(data) %>)
+        var name = document.getElementById("t-name")
+        name.innerHTML = <%= data %>
       </script>
       <% }else{ %>
       Not Logged in, login in <a href="login">Here</a>
